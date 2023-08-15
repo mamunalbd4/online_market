@@ -1,23 +1,15 @@
-#Import Python Libraries
+import streamlit as st
 import pandas as pd
-import folium #to install folium using Anaconda: conda install -c conda-forge folium
-import geopandas as gpd #to install geopandas, run this code in the conda terminal: conda install geopandas
-from folium.features import GeoJsonTooltip
-import streamlit as st #You can follow the instructions in the beginner tutorial to install Streamlit if you don't have it
-from streamlit_folium import folium_static
-import requests
-from io import StringIO
+def main():
+    st.title("Online Excel Data Import App")
+    
+    # Upload Excel file
+    uploaded_file = st.file_uploader("https://drrabangladesh-my.sharepoint.com/:x:/g/personal/mamun_arktechbd_org/EeUPMTenrYNFh4YechyHKAUBaUadsZ7MtOboEDv5zVdAIQ?e=U5SUry", type=["xlsx", "xls"])
+    
+    if uploaded_file is not None:
+        df = pd.read_excel(uploaded_file)
+        st.dataframe(df)
+        
+if __name__ == "__main__":
+    main()
 
-# GitHub CSV file URL
-github_csv_url = 'https://github.com/mamunalbd4/online_market/blob/main/Bangladesh_property_prices.csv'
-
-# Fetch CSV data using requests
-response = requests.get(github_csv_url)
-csv_data = response.text
-
-# Convert CSV data to pandas DataFrame
-df = pd.read_csv(StringIO(csv_data))
-
-# Display the DataFrame using Streamlit
-st.title('CSV Data Display')
-st.dataframe(df)
